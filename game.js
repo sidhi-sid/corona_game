@@ -22,21 +22,21 @@ function init(){
 		y:50,
 		w:150,
 		h:150,
-		speed:10,
+		speed:20,
 	};
 	virus2={
 		x:500,
 		y:300,
 		w:150,
 		h:150,
-		speed:15,	
+		speed:35,	
 	};
 	virus3={
 		x:800,
-		y:400,
+		y:600,
 		w:200,
 		h:200,	
-		speed:20,
+		speed:30,
 
 	};
 	hoo={
@@ -45,15 +45,32 @@ function init(){
 		w:120,
 		h:150,
 		speed:10,
+		moving:"false",
 	};
 	gem={
-		x:1200,
+		x:1100,
 		y:250,
 		w:200,
 		h:200,
 		
 	};
+	//create an event listener
+	canvas.addEventListener("mousedown",function(){
+		console.log("You pressed the mouse");
+		hoo.moving=true;
+	});
+	canvas.addEventListener("mouseup",function(){
+		console.log("You released the mouse");
+		hoo.moving=false;
+	});
+	document.addEventListener("keydown",function(e){
+		console.log(e.key);
+		if(e.key=="ArrowRight"){
+		hoo.moving=true;
+	}
+	});
 }
+
 function load_images(){
 	virus_image=new Image;
 	virus_image.src="virus.png"
