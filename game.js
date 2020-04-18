@@ -54,6 +54,7 @@ function init(){
 		h:200,
 		
 	};
+	virus=[virus1,virus2,virus3];
 	score=10;
 	//create an event listener
 	canvas.addEventListener("mousedown",function(){
@@ -112,7 +113,18 @@ function iscolliding(b1,b2){
 	return false;
 }
 function update(){
-
+	for(let i=0;i<=virus.length;i++){
+		if(iscolliding(virus[i],hoo)){
+			score-=i*100;
+			if(score<0){
+				//game_over=true;
+				pen.fillStyle="white";
+				pen.font="100px Georgia";
+				pen.fillText("GAME OVER",420,350);
+				clearInterval(f);
+			}
+		}
+	}
 	if(hoo.moving==true){
 		hoo.x+=10;
 		console.log("move");
@@ -142,8 +154,7 @@ function update(){
 }
 
 function gameloop(){
-	 console.log("In game loop");
- 	
+	console.log("In game loop");
  	draw();
  	update();
 	
