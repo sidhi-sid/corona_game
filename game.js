@@ -54,6 +54,7 @@ function init(){
 		h:200,
 		
 	};
+	score=10;
 	//create an event listener
 	canvas.addEventListener("mousedown",function(){
 		console.log("You pressed the mouse");
@@ -63,25 +64,26 @@ function init(){
 		console.log("You released the mouse");
 		hoo.moving=false;
 	});
-	document.addEventListener("keydown",function(e){
-		console.log(e.key);
-		if(e.key=="ArrowRight"){
-		hoo.moving=true;
-	}
-	});
+	//canvas.addEventListener("keydown",function(e){
+	//	console.log(e.key);
+	//	if(e.key=="ArrowRight"){
+	//	hoo.moving=true;
+	//}
+	//});
 }
 
 function load_images(){
 	virus_image=new Image;
-	virus_image.src="virus.png"
+	virus_image.src="virus.png";
 	virus2_image=new Image;
-	virus2_image.src="virus2.png"
+	virus2_image.src="virus2.png";
 	virus3_image=new Image;
-	virus3_image.src="virus.png"
+	virus3_image.src="virus.png";
 	hoo_image=new Image;
-	hoo_image.src="hooman.png"
+	hoo_image.src="hooman.png";
 	gem_image=new Image;
-	gem_image.src="gem.png"
+	gem_image.src="gem.png";
+
 
 }
 
@@ -98,8 +100,18 @@ function draw(){
     pen.drawImage(virus3_image,virus3.x,virus3.y,virus3.w,virus3.h);
     pen.drawImage(hoo_image,hoo.x,hoo.y,hoo.w,hoo.h);
     pen.drawImage(gem_image,gem.x,gem.y,gem.w,gem.h);
+    pen.fillStyle="black";
+    pen.font="30px Georgia";
+    pen.fillText("Score: "+score,20,30);
+
 }
 function update(){
+
+	if(hoo.moving==true){
+		hoo.x+=10;
+		console.log("move");
+		score+=20;
+	}
 	virus1.y+=virus1.speed;
 	if(virus1.y>H||virus1.y<0){
 		virus1.speed*=-1}
