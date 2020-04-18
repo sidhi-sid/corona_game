@@ -105,6 +105,12 @@ function draw(){
     pen.fillText("Score: "+score,20,30);
 
 }
+function iscolliding(b1,b2){
+	if(Math.abs(b1.x-b2.x)<=30 && Math.abs(b1.y-b2.y)<=30){
+		return true;
+	}
+	return false;
+}
 function update(){
 
 	if(hoo.moving==true){
@@ -124,11 +130,23 @@ function update(){
 	if(virus3.y>H||virus3.y<0){
 		virus3.speed*=-1}
 
+	if(iscolliding(gem,hoo)){
+		game_over=true;
+		pen.fillStyle="black";
+		pen.font="100px Georgia";
+		pen.fillText("YOU WON",420,350);
+		
+ 		clearInterval(f);
+	}
+
 }
+
 function gameloop(){
 	 console.log("In game loop");
+ 	
  	draw();
  	update();
+	
 }
 
 //start of the game
@@ -136,4 +154,4 @@ load_images();
 init();
 
 //repeated call game loop
-setInterval(gameloop,100);
+var f=setInterval(gameloop,100);
