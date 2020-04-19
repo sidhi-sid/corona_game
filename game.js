@@ -1,3 +1,19 @@
+function load_images()
+{
+	virus_image=new Image;
+	virus_image.src="virus.png";
+	virus2_image=new Image;
+	virus2_image.src="virus2.png";
+	virus3_image=new Image;
+	virus3_image.src="virus.png";
+	hoo_image=new Image;
+	hoo_image.src="hooman.png";
+	gem_image=new Image;
+	gem_image.src="gem.png";
+
+
+}
+
 function init(){
 	//Dom tree traversal to find an element
 	canvas=document.getElementById("mycanvas");
@@ -16,7 +32,7 @@ function init(){
 
 //we want to create a box
 //JSON Objects
-
+	game_over=false;
 	virus1={
 		x:200,
 		y:50,
@@ -55,7 +71,7 @@ function init(){
 		
 	};
 	virus=[virus1,virus2,virus3];
-	score=10;
+	score=0;
 	//create an event listener
 	canvas.addEventListener("mousedown",function(){
 		console.log("You pressed the mouse");
@@ -73,24 +89,6 @@ function init(){
 	//});
 }
 
-function load_images(){
-	virus_image=new Image;
-	virus_image.src="virus.png";
-	virus2_image=new Image;
-	virus2_image.src="virus2.png";
-	virus3_image=new Image;
-	virus3_image.src="virus.png";
-	hoo_image=new Image;
-	hoo_image.src="hooman.png";
-	gem_image=new Image;
-	gem_image.src="gem.png";
-
-
-}
-
-//add movement to the bird
-
-//game loop
 function draw(){
 	//clear old scren
 	pen.clearRect(0,0,W,H);
@@ -106,30 +104,34 @@ function draw(){
     pen.fillText("Score: "+score,20,30);
 
 }
-function iscolliding(b1,b2){
-	if(Math.abs(b1.x-b2.x)<=30 && Math.abs(b1.y-b2.y)<=30){
+function iscolliding(b1,b2)
+{
+	if(Math.abs(b1.x-b2.x)<=50 && Math.abs(b1.y-b2.y)<=40)
+	{
 		return true;
 	}
 	return false;
 }
 function update(){
-	for(let i=0;i<=virus.length;i++){
-		if(iscolliding(virus[i],hoo)){
-			score-=i*100;
-			if(score<0){
-				//game_over=true;
-				pen.fillStyle="white";
-				pen.font="100px Georgia";
-				pen.fillText("GAME OVER",420,350);
-				clearInterval(f);
-			}
-		}
-	}
 	if(hoo.moving==true){
-		hoo.x+=10;
+		hoo.x+=hoo.speed;
 		console.log("move");
 		score+=20;
 	}
+	for(let i=0;i<virus.length;i++){
+		if(iscolliding(virus[i],hoo)){
+			score-=i*200;
+			if(score<0){
+				
+				pen.fillStyle="black";
+				pen.font="100px Georgia";
+				pen.fillText("GAME OVER",420,350);
+				game_over=true;
+				
+			}
+		}
+	}
+	
 	virus1.y+=virus1.speed;
 	if(virus1.y>H||virus1.y<0){
 		virus1.speed*=-1}
@@ -147,14 +149,17 @@ function update(){
 		pen.fillStyle="black";
 		pen.font="100px Georgia";
 		pen.fillText("YOU WON",420,350);
+
 		
- 		clearInterval(f);
 	}
 
 }
 
 function gameloop(){
 	console.log("In game loop");
+	if(game_over==true){
+ 		clearInterval(f);
+	}
  	draw();
  	update();
 	
