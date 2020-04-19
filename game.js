@@ -35,9 +35,9 @@ function init(){
 	game_over=false;
 	virus1={
 		x:200,
-		y:50,
-		w:150,
-		h:150,
+		y:150,
+		w:170,
+		h:170,
 		speed:20,
 	};
 	virus2={
@@ -106,7 +106,7 @@ function draw(){
 }
 function iscolliding(b1,b2)
 {
-	if(Math.abs(b1.x-b2.x)<=50 && Math.abs(b1.y-b2.y)<=40)
+	if(Math.abs(b1.x-b2.x)<=40 && Math.abs(b1.y-b2.y)<=40)
 	{
 		return true;
 	}
@@ -121,14 +121,15 @@ function update(){
 	for(let i=0;i<virus.length;i++){
 		if(iscolliding(virus[i],hoo)){
 			score-=i*200;
-			if(score<0){
-				
+			if(score<100){
+				game_over=true;
 				pen.fillStyle="black";
 				pen.font="100px Georgia";
 				pen.fillText("GAME OVER",420,350);
-				game_over=true;
+				delay(100);
 				
 			}
+			
 		}
 	}
 	
@@ -145,10 +146,11 @@ function update(){
 		virus3.speed*=-1}
 
 	if(iscolliding(gem,hoo)){
-		game_over=true;
+		
 		pen.fillStyle="black";
 		pen.font="100px Georgia";
 		pen.fillText("YOU WON",420,350);
+		game_over=true;
 
 		
 	}
